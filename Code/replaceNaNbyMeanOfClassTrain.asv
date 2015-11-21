@@ -14,16 +14,14 @@ function [ testX_parsed ] = replaceNaNbyMeanOfClassTrain( testX, testY, ...
             if ~isempty(testInstancesfromClass)
                 if isnumeric(test_attribute) && ~isempty(trainInstancesfromClass)
                     trainMean = mean(train_attribute(trainInstancesfromClass))';
+                    testYesNaN = (intersect(testInstancesfromClass,...
+                        find(isnan(test_attribute))))';
                     if isnan(trainMean)
                         error('IN:replaceNaNbyMeanOfClassTrain',...
                             ['Error. \nThere are NaN values in the'...
                             ' train dataset.']);
-                    else
-                        testYesNaN = (intersect(testInstancesfromClass,...
-                            find(isnan(test_attribute))))';
-                        if ~isempty(testYesNaN)
-                            test_attribute(testYesNaN)=trainMean;
-                        end
+                    else   
+                        test_attribute(testYesNaN)=trainMean;
                     end
                 else
                      if isnumeric(test_attribute)

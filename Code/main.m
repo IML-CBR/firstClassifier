@@ -63,16 +63,16 @@ pred_y_train(find(pred_y_train==0))=-1;
 
 differences_train = find(pred_y_train~=D2train.y);
     % Error rate
-confMatTrain = confusionMatrix(pred_y_train,D2train.y);
-errRateTrain = (confMatTrain(1,2)+confMatTrain(2,1))/sizeTrain;
+confMatTrain = confusionMatrix(pred_y_train,D2train.y)
+errRateTrain = (confMatTrain(1,2)+confMatTrain(2,1))/sizeTrain
 % Test
 pred_y_test = double((x_v4'*w)>0);
 pred_y_test(find(pred_y_test==0))=-1;
 
 differences_test = find(pred_y_test~=D2test.y);
     % Error rate
-confMatTest = confusionMatrix(pred_y_test,D2test.y);
-errRateTest = (confMatTest(1,2)+confMatTest(2,1))/sizeTest;
+confMatTest = confusionMatrix(pred_y_test,D2test.y)
+errRateTest = (confMatTest(1,2)+confMatTest(2,1))/sizeTest
 
 %% QUESTION 5 - JULIÀ
 %a)
