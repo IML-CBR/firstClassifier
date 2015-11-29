@@ -88,6 +88,7 @@ errRateTrain = (confMatTrain(1,2)+confMatTrain(2,1))/sizeTrain;
 
 
 % TEST
+% Test
 pred_y_test = double((x_v4'*w)>0);
 pred_y_test(find(pred_y_test==0))=-1;
 
@@ -99,9 +100,14 @@ errRateTest = (confMatTest(1,2)+confMatTest(2,1))/sizeTest;
 
 %% QUESTION 5 - JULIÀ
 %a)
+% Comment the following three lines in order to perfom a comparison of this
+% block with the previous one
+% From here
 clear all;
 close all;
 clc;
+% To here
+
 data = load('../Data/diabetes');
 x = data.x;
 y = data.y;
@@ -129,7 +135,7 @@ w = analyticLinearRegression(x_v3,(D2train.y));
 pred_y_train = double((x_v3'*w)>0);
 pred_y_train(find(pred_y_train==0))=-1;
 
-differences_train = find(pred_y_train~=D2train.y);
+differences_train2 = find(pred_y_train~=D2train.y);
     % Error rate
 confMatTrain = confusionMatrix(pred_y_train,D2train.y);
 errRateTrain = (confMatTrain(1,2)+confMatTrain(2,1))/sizeTrain;
@@ -137,10 +143,11 @@ errRateTrain = (confMatTrain(1,2)+confMatTrain(2,1))/sizeTrain;
 pred_y_test = double((x_v4'*w)>0);
 pred_y_test(find(pred_y_test==0))=-1;
 
-differences_test = find(pred_y_test~=D2test.y);
+differences_test2 = find(pred_y_test~=D2test.y);
     % Error rate
 confMatTest = confusionMatrix(pred_y_test,D2test.y);
 errRateTest = (confMatTest(1,2)+confMatTest(2,1))/sizeTest;
+
 
 %% QUESTION 6
 clear all;
@@ -245,3 +252,15 @@ dev_error = 0.1;
 num_samples(4) = getExpectedNumSamples(dev_error,vc,confidence);
 
 num_samples
+
+
+
+%% Code for comparing the results of block4 and block5
+% Before uncomenting this lines, make sure you commented the cleaning
+% workspace lines at the start of block5
+% From here
+% differences_train3 = unique([setdiff(differences_train,differences_train2),...
+%     setdiff(differences_train2,differences_train)])
+% differences_test3 = unique([setdiff(differences_test,differences_test2),...
+%     setdiff(differences_test2,differences_test)])
+% To here
