@@ -16,7 +16,7 @@ num_instances = size(x,2);
 dimensionality = size(x,1);
 means = mean(x,2);
 
-%% QUESTION 2 - JULIÀ
+%% QUESTION 2
 %D1
 D1 = struct('x',replaceNaNbyMean(x),'y',y);
 %D2
@@ -26,7 +26,7 @@ D2 = struct('x',replaceNaNbyMeanOfClass(x,y),'y',y);
 means1 = mean(D1.x,2);
 means2 = mean(D2.x,2);
 
-%% QUESTION 3 - XAVI
+%% QUESTION 3
 x_v2 = [ones(1,num_instances); D1.x];
 x_v3 = [ones(1,num_instances); D2.x];
 w = analyticLinearRegression(x_v2,y);
@@ -53,7 +53,7 @@ errRateTrain = (confMatTrain(1,2)+confMatTrain(2,1))/size(x_v2,2);
 errRateTrain_2 = (confMatTrain_2(1,2)+confMatTrain_2(2,1))/size(x_v2,2);
 
 
-%% QUESTION 4 - JULIÀ
+%% QUESTION 4
 %a)
 clear all;
 close all;
@@ -98,7 +98,7 @@ differences_test = find(pred_y_test~=D2test.y);
 confMatTest = confusionMatrix(pred_y_test,D2test.y);
 errRateTest = (confMatTest(1,2)+confMatTest(2,1))/sizeTest;
 
-%% QUESTION 5 - JULIÀ
+%% QUESTION 5
 %a)
 % Comment the following three lines in order to perfom a comparison of this
 % block with the previous one
