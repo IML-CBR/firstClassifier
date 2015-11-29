@@ -11,6 +11,7 @@ data = load('../Data/diabetes');
 x = data.x;
 y = data.y;
 
+
 %% QUESTION 1
 num_instances = size(x,2);
 dimensionality = size(x,1);
@@ -246,7 +247,7 @@ plot(percentages_train,error_bounds);
 legend('Train Error','Test Error','Error Bound');
 
 
-%% Obtention of an approximation of number of samples
+% Obtention of an approximation of number of samples
 num_samples = zeros(1,4);
 
 vc = 3;

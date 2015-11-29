@@ -5,11 +5,7 @@ function [ X_parsed ] = replaceNaNbyMeanOfClass( X, Y )
     classes = unique(Y);
     for i=1:size(X,1)
         prov_attribute = X(i,:);
-<<<<<<< HEAD
-        for j=1:size(classes,1)
-=======
         for j=1:1:size(classes,1)
->>>>>>> 84e85dbcf5c7e386b75f33e1b253b81b224cec93
             instancesfromClass = find(Y==classes(j));
             if isnumeric(prov_attribute)
                 notNaN = (intersect(instancesfromClass,find(~isnan(prov_attribute))))';
