@@ -16,7 +16,8 @@ num_instances = size(x,2);
 dimensionality = size(x,1);
 means = mean(x,2);
 
-%% QUESTION 2 - JULIÀ
+
+%% QUESTION 2
 %D1
 D1 = struct('x',replaceNaNbyMean(x),'y',y);
 %D2
@@ -26,19 +27,23 @@ D2 = struct('x',replaceNaNbyMeanOfClass(x,y),'y',y);
 means1 = mean(D1.x,2);
 means2 = mean(D2.x,2);
 
-%% QUESTION 3 - XAVI
+
+%% QUESTION 3
 x_v2 = [ones(1,num_instances); D1.x];
 x_v3 = [ones(1,num_instances); D2.x];
-w = analyticLinearRegression(x_v2,y);
+w_1 = analyticLinearRegression(x_v2,y);
 w_2 = analyticLinearRegression(x_v3,y);
 
 % Plane normal vector
-w(2:9)
+w_1_normal_vector = w_1(2:9);
+w_2_normal_vector = w_2(2:9);
 
 % Threshold
-w(1)
+w_1_threshold = w_1(1);
+w_2_threshold = w_2(1);
 
-pred_y_train = double((x_v2'*w)>0);
+% Analysis
+pred_y_train = double((x_v2'*w_1)>0);
 pred_y_train(find(pred_y_train==0))=-1;
 
 pred_y_train_2 = double((x_v3'*w_2)>0);
@@ -53,7 +58,7 @@ errRateTrain = (confMatTrain(1,2)+confMatTrain(2,1))/size(x_v2,2);
 errRateTrain_2 = (confMatTrain_2(1,2)+confMatTrain_2(2,1))/size(x_v2,2);
 
 
-%% QUESTION 4 - JULIÀ
+%% QUESTION 4
 %a)
 clear all;
 close all;
@@ -61,8 +66,10 @@ clc;
 data = load('../Data/diabetes');
 x = data.x;
 y = data.y;
+
 %b)
 D2 = struct('x',replaceNaNbyMeanOfClass(x,y),'y',y);
+
 %c)
 sizeTrain = ceil(4 * size(data.x,2)/5);
 sizeTest = size(data.x,2)-sizeTrain;
@@ -88,7 +95,6 @@ errRateTrain = (confMatTrain(1,2)+confMatTrain(2,1))/sizeTrain;
 
 
 % TEST
-% Test
 pred_y_test = double((x_v4'*w)>0);
 pred_y_test(find(pred_y_test==0))=-1;
 
@@ -98,7 +104,8 @@ differences_test = find(pred_y_test~=D2test.y);
 confMatTest = confusionMatrix(pred_y_test,D2test.y);
 errRateTest = (confMatTest(1,2)+confMatTest(2,1))/sizeTest;
 
-%% QUESTION 5 - JULIÀ
+
+%% QUESTION 5
 %a)
 % Comment the following three lines in order to perfom a comparison of this
 % block with the previous one
@@ -131,20 +138,24 @@ x_v4 = [ones(1,sizeTest);D2test.x];
 w = analyticLinearRegression(x_v3,(D2train.y));
 
 %e)
-% Train
+% TRAIN
 pred_y_train = double((x_v3'*w)>0);
 pred_y_train(find(pred_y_train==0))=-1;
 
 differences_train2 = find(pred_y_train~=D2train.y);
-    % Error rate
+
+% Error rate
 confMatTrain = confusionMatrix(pred_y_train,D2train.y);
 errRateTrain = (confMatTrain(1,2)+confMatTrain(2,1))/sizeTrain;
-% Test
+
+
+% TEST
 pred_y_test = double((x_v4'*w)>0);
 pred_y_test(find(pred_y_test==0))=-1;
 
 differences_test2 = find(pred_y_test~=D2test.y);
-    % Error rate
+
+% Error rate
 confMatTest = confusionMatrix(pred_y_test,D2test.y);
 errRateTest = (confMatTest(1,2)+confMatTest(2,1))/sizeTest;
 
@@ -196,6 +207,7 @@ for i = 1:size(percentages_train,2)
     pred_y_train(pred_y_train==0)=-1;
 
     differences_train = find(pred_y_train~=D2train.y);
+	
     % Error rate
     confMatTrain = confusionMatrix(pred_y_train,D2train.y);
     errRateTrain = (confMatTrain(1,2)+confMatTrain(2,1))/sizeTrain;
@@ -206,11 +218,13 @@ for i = 1:size(percentages_train,2)
     figure(h2);
     scatter(percentage_train,errRateTrain,'MarkerEdgeColor',[0.5 .5 0]);
     
+	
     % TEST
     pred_y_test = double((x_v4'*w)>0);
     pred_y_test(pred_y_test==0)=-1;
 
     differences_test = find(pred_y_test~=D2test.y);
+	
     % Error rate
     confMatTest = confusionMatrix(pred_y_test,D2test.y);
     errRateTest = (confMatTest(1,2)+confMatTest(2,1))/sizeTest;
@@ -221,6 +235,7 @@ for i = 1:size(percentages_train,2)
     figure(h2);
     scatter(percentage_train,errRateTest,'MarkerEdgeColor',[0 0.5 0.5]);
     
+	%% We store the error bound, with a 0.05 deviation error
     error_bounds(i) = errorBound(errRateTrain,3,sizeTrain,0.05);
 end
 figure(h1);
@@ -231,7 +246,7 @@ plot(percentages_train,error_bounds);
 legend('Train Error','Test Error','Error Bound');
 
 
-
+%% Obtention of an approximation of number of samples
 num_samples = zeros(1,4);
 
 vc = 3;
@@ -250,8 +265,6 @@ num_samples(3) = getExpectedNumSamples(dev_error,vc,confidence);
 confidence = 0.95;
 dev_error = 0.1;
 num_samples(4) = getExpectedNumSamples(dev_error,vc,confidence);
-
-num_samples
 
 
 
